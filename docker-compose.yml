@@ -1,0 +1,108 @@
+services:
+  # Generate Boulder dataset (urban, moderate terrain)
+  gen-boulder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /share/digiran/ali/boulder_dataset:/output
+    tmpfs:
+      - /tmp/sionna_scenes:size=10G,mode=1777
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu, compute, utility, graphics]
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=3
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+      - SLRM_DATA_DIR=/app/data
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: python3 scripts/gen_boulder_dataset.py
+
+  # Generate Lubbock dataset (flat rural)
+  gen-lubbock:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /share/digiran/ali/lubbock_dataset:/output
+    tmpfs:
+      - /tmp/sionna_scenes:size=10G,mode=1777
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu, compute, utility, graphics]
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=3
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+      - SLRM_DATA_DIR=/app/data
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: python3 scripts/gen_lubbock_dataset.py
+
+  # Generate Boston dataset (dense coastal urban)
+  gen-boston:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /share/digiran/ali/boston_dataset:/output
+    tmpfs:
+      - /tmp/sionna_scenes:size=10G,mode=1777
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu, compute, utility, graphics]
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=3
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+      - SLRM_DATA_DIR=/app/data
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: python3 scripts/gen_boston_dataset.py
+
+  # Generate Aspen dataset (rural mountain)
+  gen-aspen:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /share/digiran/ali/aspen_dataset:/output
+    tmpfs:
+      - /tmp/sionna_scenes:size=10G,mode=1777
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu, compute, utility, graphics]
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=3
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+      - SLRM_DATA_DIR=/app/data
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: python3 scripts/gen_aspen_dataset.py
